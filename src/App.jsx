@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
+import Landing from "./Components/Landing/Landing";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [modalOpen, modalClose] = useState(false);
 
   return (
     <>
-      <h1>Hello, world!</h1>
-      <p>yes</p>
+      <Landing />
     </>
   );
 }

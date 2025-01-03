@@ -1,0 +1,17 @@
+.section-container {
+  padding: 2.5% 1%;
+  display: flex;
+}
+
+.section-container .content-container {
+  padding: 0 2%;
+}
+
+.tabler-icon {
+  margin-top: 2.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #d1cb9c;
+}

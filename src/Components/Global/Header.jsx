@@ -20,10 +20,10 @@ function Header() {
           <a className="navbar-element">About</a>
         </li>
         <li>
-          <a className="navbar-element">Experience</a>
+          <a className="navbar-element">Projects</a>
         </li>
         <li>
-          <a className="navbar-element">Contact Me</a>
+          <a className="navbar-element">Extras</a>
         </li>
       </ul>
     </nav>
