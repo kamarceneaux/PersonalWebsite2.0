@@ -1,14 +1,16 @@
-import { useState } from "react";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Landing from "./Components/Landing/Landing";
+import "./App.css";
 
 function App() {
-  const [modalOpen, modalClose] = useState(false);
-
   return (
-    <>
-      <Landing />
-    </>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
