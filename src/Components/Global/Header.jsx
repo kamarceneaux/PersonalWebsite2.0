@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+
 import { useState } from "react";
 import "./Header.css";
 
@@ -17,13 +17,13 @@ function Header() {
       </div>
       <ul className={menuOpen ? "open" : ""}>
         <li>
-          <p className="navbar-element">About</p>
+          <a className="navbar-element">About</a>
         </li>
         <li>
-          <p className="navbar-element">Experience</p>
+          <a className="navbar-element">Experience</a>
         </li>
         <li>
-          <p className="navbar-element">Contact Me</p>
+          <a className="navbar-element">Contact Me</a>
         </li>
       </ul>
     </nav>
