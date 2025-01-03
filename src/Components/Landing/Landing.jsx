@@ -44,7 +44,21 @@ export default function Landing() {
               Chevron in the Summer 2025 as a Software Engineering Intern
             </span>
             . I love building new solutions with technology and have a passion
-            for life long learning. Here check out what I've been working on.
+            for life long learning. As someone whose been programming since I
+            was a Freshman in High School, I have experience in a variety of
+            languages and technologies and have loved increasing my toolset
+            through the years.
+            <br />
+            <br />
+            Outside of coding, I enjoying watching sports (Love my Pelicans,
+            Saints and especially LSU Tigers), playing video games,
+            volunteering, and spending time with my family and friends. Another
+            hobby of mines is I enjoy being outside, whether if that involves
+            playing sports such as pickleball or embracing our planet, I love it
+            a lot.
+            <br />
+            <br />
+            Feel to check out my projects and experience more on this website!
           </p>
 
           <Grid2 container spacing={1} className="landing-button-container">

@@ -3,6 +3,7 @@ import Landing from "./Components/Landing/Landing";
 import "./App.css";
 import Header from "./Components/Global/Header";
 import About from "./Components/About/About";
+import Projects from "./Components/Projects/Projects";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>

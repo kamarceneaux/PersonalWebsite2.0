@@ -8,7 +8,7 @@ function Header() {
   return (
     <nav className="">
       <h1 id="logo" className="non-selectable">
-        KA
+        <NavLink to="/">KA</NavLink>
       </h1>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
         <span></span>
