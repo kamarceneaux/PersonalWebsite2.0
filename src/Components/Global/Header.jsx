@@ -17,11 +17,6 @@ function Header() {
       </div>
       <ul className={menuOpen ? "open" : ""}>
         <li>
-          <NavLink to="/about" className="navbar-element">
-            About
-          </NavLink>
-        </li>
-        <li>
           <NavLink to="/projects" className="navbar-element">
             Projects
           </NavLink>

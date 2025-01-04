@@ -1,0 +1,32 @@
+.footer-container {
+  margin: 2.5% 0 0;
+}
+
+.footer-container p {
+  font-size: 1rem;
+  color: #4c4848;
+}
+
+.footer-container a {
+  text-decoration: none;
+  color: #000000;
+  transition: all 0.3s ease;
+}
+
+.footer-container a:hover {
+  color: #143c64;
+}
+
+.fc-right {
+  text-align: right;
+}
+
+.social-icon:hover {
+  color: #151617;
+}
+
+@media (max-width: 600px) {
+  .fc-right {
+    text-align: left;
+  }
+}

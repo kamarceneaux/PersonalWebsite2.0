@@ -4,6 +4,7 @@ import "./App.css";
 import Header from "./Components/Global/Header";
 import About from "./Components/About/About";
 import Projects from "./Components/Projects/Projects";
+import Footer from "./Components/Global/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="*" element={<Landing />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
