@@ -19,6 +19,8 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Install Dependencies
+        run: npm ci
       - name: Build Application
         run: npm run build
       - name: Build And Deploy
