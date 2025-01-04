@@ -3,7 +3,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import "./Landing.css";
 import LandingButton from "./LandingButton";
-import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa6";
+import { FaDownload } from "react-icons/fa6";
 
 export default function Landing() {
   const theme = useTheme();
