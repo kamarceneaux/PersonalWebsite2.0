@@ -17,7 +17,18 @@ export default function Projects() {
             "Susiki is an academic assistant and planning app create by me. Susiki offers features like task and exam management, and it organizes events based on enrolled classes. It aims to simplify academic planning for students seeking a more cohesive tool."
           }
           chips={susikiChips}
-          image={<iframe src="https://susiki.com"></iframe>}
+          image={
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/wi1DtOC0xzs?si=-lKp5E8DFGGZVsmx"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          }
         >
           <h1>Description</h1>
           <Typography
@@ -63,8 +74,11 @@ export default function Projects() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {"View Susiki Live"}
+            {"View Susiki Live (application will soon be deceactivated)"}
           </a>
+          <p>
+            Github code will be provided once Susiki is successfully deleted!
+          </p>
         </ProjectCard>
         <ProjectCard
           title={"InPocket"}
