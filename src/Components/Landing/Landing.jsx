@@ -20,7 +20,7 @@ export default function Landing() {
         <Grid2 size={{ s: 0, md: 4 }}>
           <div className="image-container">
             <img
-              src="https://kameronpublicwebsite.blob.core.windows.net/public/me.png"
+              src="https://kameronpublicwebsite.blob.core.windows.net/public/thirdheadshot.jpg"
               className="responsive-image"
             ></img>
           </div>
@@ -39,9 +39,9 @@ export default function Landing() {
             <span className="emphasis">
               Student Software Developer at LSU Information Technology Services
             </span>{" "}
-            where I have been at since January 2024 and I am joining{" "}
+            where I have been at since January 2024 and I am currently working with {" "}
             <span className="emphasis">
-              Chevron in the Summer 2025 as a Software Engineering Intern
+            Chevron in the Summer 2025 as a Software Engineering Intern
             </span>
             . I love building new solutions with technology and have a passion
             for life long learning. As someone whose been programming since I
@@ -64,10 +64,10 @@ export default function Landing() {
           <Grid2 container spacing={1} className="landing-button-container">
             <LandingButton
               link={
-                "https://kameronpublicwebsite.blob.core.windows.net/public/KameronArceneaux_Resume.pdf"
+                "https://kameronpublicwebsite.blob.core.windows.net/public/KameronArceneaux_Summer2025_Resume.pdf"
               }
             >
-              View Resume <FaDownload />
+              View Resume<FaDownload />
             </LandingButton>
           </Grid2>
         </div>
