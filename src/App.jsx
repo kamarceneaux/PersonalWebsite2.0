@@ -1,22 +1,26 @@
-import { BrowserRouter, Route, Routes } from "react-router";
-import Landing from "./Components/Landing/Landing";
-import "./App.css";
-import Header from "./Components/Global/Header";
-import About from "./Components/About/About";
-import Projects from "./Components/Projects/Projects";
-import Footer from "./Components/Global/Footer";
+import { BrowserRouter } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import Home from "./Components/Home";
+import Experience from "./Components/Experience";
+import Projects from "./Components/Projects";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen bg-green-50 text-gray-800 font-sans selection:bg-green-200">
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="*" element={<Landing />} />
-        </Routes>
+        <Navbar />
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 space-y-24">
+          <section id="home">
+            <Home />
+          </section>
+          <section id="experience">
+            <Experience />
+          </section>
+          <section id="projects">
+            <Projects />
+          </section>
+        </main>
         <Footer />
       </BrowserRouter>
     </div>
