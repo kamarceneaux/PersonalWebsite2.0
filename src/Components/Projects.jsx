@@ -5,6 +5,20 @@ import { FaGithub } from "react-icons/fa6";
 
 const projects = [
   {
+    id: 0,
+    title: "Bakyumu - Robotic Vacuum",
+    year: "2025",
+    shortDesc: "A remote-controlled vacuum and disinfectant spraying robot.",
+    fullDesc: "Bakyumu is a multi-functional cleaning robot that integrates a mechanical chassis equipped with both a suction unit for collecting small debris and a pumping mechanism for spraying disinfectant. Its electrical architecture manages the power distribution to these actuators and the drive motors, while a Wi-Fi-enabled microcontroller serves as the central processing unit. On the software side, this hardware is bridged to a responsive web application, allowing users to remotely toggle cleaning modes and navigate the robot in real-time through a browser-based interface.",
+    story: "Bakyumu was conceived as an engineering student project at LSU for my Intro to Robotics class, driven by the desire to assist individuals with limited mobility who find it painful to manually scrub or clean floors. Recognizing that existing autonomous solutions like Roombas are often prohibitively expensive ($300–$600), we sought to engineer a more accessible, cost-effective alternative that combined remote-controlled vacuuming with a disinfectant spray system. We had four weeks, $100 budget and a dream to make it happen. The development process was shaped by strict resource constraints, requiring us to leverage lab-provided components like VEX motors and fans while overcoming significant technical hurdles (such as frying a microprocessor and wrestling with complex motor calibration) during our process.",
+    skills: ["Raspberry Pi Pico 2W", "Python", "Fusion 360", "Cirkit Designer", "Electrical Analysis", "Wi-Fi Communication"],
+    video: "https://www.youtube.com/embed/aGsKar0hvW8?si=GsIhPQ8d0UXWq9-W",
+    links: [
+        { name: "GitHub", url: "https://github.com/kamarceneaux/Bakyumu" },
+        { name: "Slide Deck", url: "https://kameronpublicwebsite.blob.core.windows.net/public/ENGR3100_FinalProject.pdf" }
+    ]
+  },
+  {
     id: 1,
     title: "Susiki",
     year: "2024",
@@ -45,6 +59,7 @@ export default function Projects() {
         className="text-center"
       >
         <h2 className="text-3xl font-bold text-gray-900">Projects</h2>
+        <p>Click each box to learn more :)</p>
         <div className="w-20 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div>
       </motion.div>
 
