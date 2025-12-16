@@ -136,6 +136,7 @@ export default function Projects() {
                     className="w-full h-full"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                   />
                 </div>
