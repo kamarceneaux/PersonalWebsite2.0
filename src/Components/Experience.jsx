@@ -1,106 +1,76 @@
 import { motion } from "framer-motion";
+import { MapPin } from "lucide-react";
+import { SectionTitle, Sparkle } from "./Decor";
+import { experiences } from "../data";
 
-const experiences = [
-  {
-    company: "Chevron",
-    role: "Software Engineering Intern",
-    period: "May 2025 - August 2025",
-    logo: "https://1000logos.net/wp-content/uploads/2017/12/Chevron-Logo.png",
-    description: [
-      "Saved 8,000 engineering hours annually by architecting and deploying a rule-based model that automated the sorting and relevancy ranking of P&IDs.",
-      "Developed a scalable ETL pipeline using Databricks and PySpark to consolidate diverse data sources and securely transfer payloads to a third-party partner.",
-      "Optimized a feature in a critical data pipeline to achieve a 90% improvement in processing speed, substantially lowering cloud compute costs."
-    ],
-    skills: ["Azure Databricks", "PySpark", "ETL", "Python", "Azure Data Factory", "Azure DevOps", "Agile Workflow"]
-  },
-  {
-    company: "Shell",
-    role: "Data Engineering Intern",
-    period: "January 2025 - May 2025",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Shell_logo.svg/1200px-Shell_logo.svg.png",
-    description: [
-      "Designed and implemented a database solution to manage structured and unstructured data for an end-to-end image processing pipeline.",
-      "Integrated a Computer Vision model into a dockerized Flask application for user interaction.",
-      "Applied image compressing techniques to save memory performance and reduce costs by 15% in Azure SQL Database and Blob Storage."
-    ],
-    skills: ["Azure Blob Storage", "Azure SQL Database", "Azure Functions", "Docker", "Flask", "Computer Vision", "SQL", "Python", "OpenAI API"]
-  },
-  {
-    company: "LSU Information Technology Services",
-    role: "Student Software Developer",
-    period: "January 2024 - Present",
-    logo: "https://pbs.twimg.com/profile_images/1640787019432595457/eKdwaf_8_400x400.jpg",
-    description: [
-      "Contributed to development of six web services offered to over 40,000 students and 500+ faculty.",
-      "Worked on solutions mapping student mainframe data to Workday for production-grade applications.",
-      "Adapted to changing business requirements to deliver new features and enhancements."
-    ],
-    skills: ["Spring Boot", "ASP.NET", "Webpack", "npm", "GitLab", "C#", "Java", "SQL Server"]
-  }
-];
+const tilts = [-1, 0.8, -0.6, 1.1];
 
 export default function Experience() {
   return (
-    <div className="space-y-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center"
-      >
-        <h2 className="text-3xl font-bold text-gray-900">Experience</h2>
-        <div className="w-20 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div>
-      </motion.div>
+    <div className="relative">
+      <SectionTitle label="02 / where I've worked" title="WORK" seed={23}>
+        <Sparkle spin size={40} color="var(--color-lime)" className="absolute top-6 right-4 sm:right-24 drop-shadow-[2px_2px_0_var(--color-ink)]" />
+      </SectionTitle>
 
-      <div className="space-y-8">
+      <ol className="mt-14 space-y-14 sm:space-y-16">
         {experiences.map((exp, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-green-50"
-            style={{padding: "32px"}}
+          <motion.li
+            key={`${exp.company}-${exp.period}`}
+            initial={{ opacity: 0, y: 40, rotate: 0 }}
+            whileInView={{ opacity: 1, y: 0, rotate: tilts[index % tilts.length] }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55 }}
+            className={`sheet relative p-6 sm:p-9 ${index % 2 ? "md:ml-16" : "md:mr-16"}`}
           >
-            <div className="flex flex-col md:flex-row gap-6 items-start">
-              <div className="w-16 h-16 flex-shrink-0 bg-white rounded-lg p-6 shadow-sm border border-gray-100 flex items-center justify-center">
-                <img src={exp.logo} alt={exp.company} className="w-full h-full object-contain" />
-              </div>
-              
-              <div className="flex-1 space-y-4">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">{exp.role}</h3>
-                    <p className="text-green-600 font-medium">{exp.company}</p>
-                  </div>
-                  <span className="text-sm text-gray-500 px-3 py-1 rounded-full whitespace-nowrap">
-                    {exp.period}
-                  </span>
-                </div>
+            <div className={`tape -top-3 ${index % 2 ? "right-12 rotate-3" : "left-12 -rotate-3"}`} />
 
-                <ul className="space-y-2 text-gray-600 list-disc list-inside">
-                  {exp.description.map((item, i) => (
-                    <li key={i} className="leading-relaxed">{item}</li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {exp.skills.map((skill) => (
-                    <span 
-                      key={skill} 
-                      className="px-3 py-1 bg-green-50 text-green-700 text-sm rounded-full font-medium border border-green-100"
-                      style={{padding: "6px"}}
-                    >
-                      {skill}
-                    </span>
-                  ))}
+            {/* metric sticker */}
+            <div className="absolute -top-7 right-4 sm:-right-6 rotate-[8deg] z-10">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-lime border-2 border-ink shadow-[3px_3px_0_var(--color-ink)] grid place-items-center text-center p-3">
+                <div>
+                  <p className="font-display text-2xl sm:text-3xl text-forest leading-none">{exp.stat.value}</p>
+                  <p className="mt-1 font-mono text-[0.6rem] sm:text-[0.65rem] font-bold uppercase leading-tight text-forest">
+                    {exp.stat.label}
+                  </p>
                 </div>
               </div>
             </div>
-          </motion.div>
+
+            <div className="pr-24 sm:pr-28">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="inline-block font-display text-3xl sm:text-4xl text-leaf border-[3px] border-leaf rounded-lg px-3 py-0.5 -rotate-2 mix-blend-multiply">
+                  {exp.company}
+                </span>
+                {exp.tag && <span className="font-hand text-2xl text-forest rotate-[-4deg]">← {exp.tag}!</span>}
+              </div>
+              <h3 className="mt-4 text-xl sm:text-2xl font-bold">{exp.role}</h3>
+              <p className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-sm text-ink/70">
+                <span>{exp.period}</span>
+                <span className="flex items-center gap-1">
+                  <MapPin size={14} /> {exp.location}
+                </span>
+              </p>
+            </div>
+
+            <ul className="mt-6 space-y-3">
+              {exp.description.map((item, i) => (
+                <li key={i} className="flex gap-3 leading-relaxed text-ink/85">
+                  <Sparkle size={12} color="var(--color-leaf)" className="mt-[0.45rem] shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-2">
+              {exp.skills.map((skill, i) => (
+                <span key={skill} className="dymo" style={{ transform: `rotate(${(i % 3) - 1}deg)` }}>
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.li>
         ))}
-      </div>
+      </ol>
     </div>
   );
 }

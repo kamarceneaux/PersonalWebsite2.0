@@ -1,79 +1,119 @@
 import { motion } from "framer-motion";
-import { Mail, FileText } from "lucide-react";
+import { FileText, ArrowDown } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { CutoutText, Sparkle, Paperclip, SpinBadge } from "./Decor";
+import { links } from "../data";
 
 export default function Home() {
   return (
-    <div className="min-h-[80vh] flex flex-col-reverse md:flex-row items-center justify-center gap-12">
-      <motion.div 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="flex-1 space-y-6 text-center md:text-left"
+    <div className="relative min-h-[92vh] pt-28 pb-16 grid md:grid-cols-[1.15fr_0.85fr] gap-12 md:gap-8 items-center">
+      {/* Left: the "I'm Kameron" page */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative order-2 md:order-1"
       >
-        <h2 className="text-green-600 font-semibold text-lg tracking-wide">
-          Software Engineer | Aspiring Perception Engineer
-        </h2>
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900" style={{marginBottom: "12px"}}>
-          Hi, I'm <span className="text-green-600">Kameron Arceneaux</span>
+        <div className="flex items-center gap-3 mb-6">
+          <span className="font-mono text-sm font-bold text-leaf">2026</span>
+          <span className="h-[2px] w-10 bg-ink/30" />
+          <span className="font-mono text-xs font-bold tracking-[0.2em] uppercase text-forest/70">Portfolio</span>
+        </div>
+
+        <h1 className="relative">
+          <CutoutText text="I'M" seed={2} className="block text-6xl sm:text-7xl md:text-8xl text-leaf" />
+          <CutoutText text="KAMERON" seed={4} className="block text-[3.6rem] sm:text-8xl lg:text-[8.5rem] text-leaf -mt-1" />
+          <Sparkle spin size={36} color="var(--color-lime)" className="absolute -top-4 left-28 sm:left-36 drop-shadow-[1px_1px_0_var(--color-ink)]" />
         </h1>
-        <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
-          I am a Computer Science student at Louisiana State University specializing in Data Science and Analytics with a minor in Robotics Engineering. 
-          Currently, I work part-time as a <span className="font-semibold text-green-700">Student Software Developer at LSU ITS </span>   
-           and I am joining <span className="font-semibold text-green-700">Chevron in Summer 2026</span> as a Software Engineering Intern.
+
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/85">
+          I'm a software engineer studying <strong>Computer Science (Data Science &amp; Analytics)</strong> at{" "}
+          <strong>LSU</strong> with a <strong>Robotics Engineering</strong> minor. I just wrapped my{" "}
+          <mark className="bg-lime/70 px-1 rounded-sm">second summer at Chevron</mark>, and I build web apps for LSU ITS
+          during the school year.
         </p>
-        <p className="text-lg text-gray-600 leading-relaxed max-w-2xl">
-          I love building new solutions with technology and have a passion for lifelong learning. 
-          Outside of coding, I enjoy watching sports (Pelicans, Saints, LSU Tigers), playing video games, 
-          and spending time outdoors.
+        <p className="mt-3 font-hand text-2xl text-forest -rotate-1">
+          I like building things that save people time. Robots count too.
         </p>
-        
-        <div className="flex flex-wrap gap-4 justify-center md:justify-start p-6">
-          <SocialLink href="https://www.linkedin.com/in/kamarceneaux/" icon={<FaLinkedin size={24} />} label="LinkedIn" />
-          <SocialLink href="https://github.com/kamarceneaux" icon={<FaGithub size={24} />} label="GitHub" />
-          <SocialLink href="mailto:kameron.arceneaux@outlook.com" icon={<Mail size={24} />} label="Email" />
-          <a 
-            href="https://kameronpublicwebsite.blob.core.windows.net/public/ArceneauxKameron_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 px-8 py-4 bg-green-600 text-white rounded-full hover:bg-green-700 transition-all shadow-lg hover:shadow-green-200 hover:-translate-y-1 font-medium"
-            style={{padding: "8px"}}
-          >
-            <FileText size={22} /> View My Resume
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a href={links.resume} target="_blank" rel="noopener noreferrer" className="bubble focus-ring">
+            <FileText size={18} /> Resume
           </a>
+          <a href="#contact" className="bubble bubble-ghost focus-ring">
+            Say hi ✦
+          </a>
+          <div className="flex gap-2 ml-1">
+            <IconLink href={links.linkedin} label="LinkedIn">
+              <FaLinkedin size={20} />
+            </IconLink>
+            <IconLink href={links.github} label="GitHub">
+              <FaGithub size={20} />
+            </IconLink>
+          </div>
         </div>
       </motion.div>
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        className="flex-1 flex justify-center"
+      {/* Right: taped polaroid headshot */}
+      <motion.div
+        initial={{ opacity: 0, rotate: 8, y: 40 }}
+        animate={{ opacity: 1, rotate: 3, y: 0 }}
+        transition={{ duration: 0.8, type: "spring", bounce: 0.35 }}
+        className="relative order-1 md:order-2 mx-auto w-[min(66vw,340px)]"
       >
-        <div className="relative w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute inset-0 bg-green-200 rounded-full blur-2xl opacity-50 animate-pulse"></div>
-          <img 
-            src="https://kameronpublicwebsite.blob.core.windows.net/public/HeadshotUpdate.png" 
-            alt="Kameron Arceneaux" 
-            className="relative w-full h-full object-cover rounded-full border-4 border-white shadow-2xl"
-          />
+        {/* sticky note behind the photo */}
+        <div className="absolute -left-10 -top-8 w-40 h-36 bg-lime -rotate-12 shadow-md hidden sm:block" />
+
+        <div className="sheet relative p-3 pb-14 bg-white rotate-0">
+          <Paperclip className="absolute -top-8 right-8 w-7 h-[4.5rem] z-10 rotate-6" />
+          <div className="aspect-[4/5] overflow-hidden bg-mint">
+            <img
+              src="/headshot.jpg"
+              alt="Kameron Arceneaux smiling in a black suit and lavender tie"
+              className="w-full h-full object-cover object-[50%_18%]"
+              fetchPriority="high"
+            />
+          </div>
+          <p className="absolute bottom-3 left-0 right-0 text-center font-hand text-3xl text-ink/80">
+            hi, that's me!
+          </p>
         </div>
+
+        <div className="tape -bottom-3 -left-6 rotate-[-35deg]" />
+
+        <SpinBadge
+          text="SOFTWARE ✦ DATA ✦ ROBOTICS ✦ "
+          className="absolute -bottom-10 -right-6 sm:-right-12 w-28 h-28 -rotate-6"
+        >
+          <span className="font-display text-2xl text-forest">LSU</span>
+        </SpinBadge>
+
+        <span className="absolute -top-5 -left-4 sm:left-auto sm:-right-6 dymo rotate-6 text-[0.7rem]">
+          SWE Intern @ Chevron ×2
+        </span>
+        <Sparkle size={22} color="var(--color-leaf)" className="absolute top-1/3 -left-8" />
       </motion.div>
+
+      <a
+        href="#about"
+        className="focus-ring hidden md:flex absolute bottom-4 left-1/2 -translate-x-1/2 items-center gap-2 font-mono text-xs font-bold tracking-widest uppercase text-forest/70 hover:text-leaf"
+      >
+        <ArrowDown size={14} className="animate-bounce" /> scroll
+      </a>
     </div>
   );
 }
 
-function SocialLink({ href, icon, label }) {
+function IconLink({ href, label, children }) {
   return (
-    <a 
+    <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="p-6 bg-white text-gray-700 rounded-full shadow-md hover:text-green-600 hover:shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center"
       aria-label={label}
-      style={{padding: "8px"}}
+      className="focus-ring grid place-items-center w-12 h-12 rounded-full bg-sheet border-2 border-ink shadow-[0_3px_0_var(--color-ink)] hover:-translate-y-0.5 hover:bg-lime transition-all"
     >
-      {icon}
+      {children}
     </a>
   );
 }

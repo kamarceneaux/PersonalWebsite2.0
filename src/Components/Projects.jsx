@@ -1,187 +1,220 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink } from "lucide-react";
+import { ExternalLink, Bot, BarChart3, CalendarCheck, Wallet, Play, Trophy } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
+import { SectionTitle, Sparkle, Paperclip } from "./Decor";
+import { projects } from "../data";
 
-const projects = [
-  {
-    id: 0,
-    title: "Bakyumu - Robotic Vacuum",
-    year: "2025",
-    shortDesc: "A remote-controlled vacuum and disinfectant spraying robot.",
-    fullDesc: "Bakyumu is a multi-functional cleaning robot that integrates a mechanical chassis equipped with both a suction unit for collecting small debris and a pumping mechanism for spraying disinfectant. Its electrical architecture manages the power distribution to these actuators and the drive motors, while a Wi-Fi-enabled microcontroller serves as the central processing unit. On the software side, this hardware is bridged to a responsive web application, allowing users to remotely toggle cleaning modes and navigate the robot in real-time through a browser-based interface.",
-    story: "Bakyumu was conceived as an engineering student project at LSU for my Intro to Robotics class, driven by the desire to assist individuals with limited mobility who find it painful to manually scrub or clean floors. Recognizing that existing autonomous solutions like Roombas are often prohibitively expensive ($300–$600), we sought to engineer a more accessible, cost-effective alternative that combined remote-controlled vacuuming with a disinfectant spray system. We had four weeks, $100 budget and a dream to make it happen. The development process was shaped by strict resource constraints, requiring us to leverage lab-provided components like VEX motors and fans while overcoming significant technical hurdles (such as frying a microprocessor and wrestling with complex motor calibration) during our process.",
-    skills: ["Raspberry Pi Pico 2W", "Python", "Fusion 360", "Cirkit Designer", "Electrical Analysis", "Wi-Fi Communication"],
-    video: "https://www.youtube.com/embed/aGsKar0hvW8?si=GsIhPQ8d0UXWq9-W",
-    links: [
-        { name: "GitHub", url: "https://github.com/kamarceneaux/Bakyumu" },
-        { name: "Slide Deck", url: "https://kameronpublicwebsite.blob.core.windows.net/public/ENGR3100_FinalProject.pdf" }
-    ]
-  },
-  {
-    id: 1,
-    title: "Susiki",
-    year: "2024",
-    shortDesc: "Academic assistant and planning app for students.",
-    fullDesc: "Susiki is an academic assistant and planning app created by me. It offers features like task and exam management, and organizes events based on enrolled classes. It aims to simplify academic planning for students seeking a more cohesive tool.",
-    story: "As I finished my first year of college, I sometimes struggled with ways to manage my academic workload at times. Constantly switching from app to app just to find one that I felt met my needs. This inspired me to make my own version of an app, that I felt like I would use and maybe others would too. I’ve called this app “Susiki” and it’s designed to be an academic assistant app, with features such as task and exam management and able to organize events based enrolled classes. This was a successful personal project, that required many months of planning and technical work. The tech stack used was React (TypeScript) and Spring Boot (Java), built on top of a MySQL database. I also gained cloud experience with AWS for the deployment of the backend, frontend, web certificates and domain management. https://susiki.com (retired the domain in September 2025)",
-    skills: ["React", "Spring Boot", "AWS", "Figma", "Java", "TypeScript"],
-    video: "https://www.youtube.com/embed/wi1DtOC0xzs?si=-lKp5E8DFGGZVsmx",
-    links: [
-      { name: "Live Demo", url: "https://susiki.com" }
-    ]
-  },
-  {
-    id: 2,
-    title: "InPocket",
-    year: "2021",
-    shortDesc: "Personal finance tracker desktop application.",
-    fullDesc: "InPocket is a personal finance tracker that helps users manage their expenses. It allows users to input their expenses and income, providing a visual representation of their financial status.",
-    story: "A desktop application that allows users to manage finances using a digital money log. Features include transaction logging, graphs, and statistics. This project was awarded best app in The Congressional App Challenge for district LA-06 in 2021.",
-    skills: ["Python", "SQLite", "Tkinter"],
-    video: "https://www.youtube.com/embed/zKJH-ljp5fQ?si=ukvtDj7DUjllzAN-",
-    links: [
-      { name: "GitHub", url: "https://github.com/kamarceneaux/InPocket" },
-      { name: "InPocket In the News 👀", url: "https://www.brproud.com/news/local-news/denham-springs-high-school-student-wins-2021-congressional-app-challenge/" }
-    ]
+const icons = { bot: Bot, chart: BarChart3, calendar: CalendarCheck, wallet: Wallet };
+const tilts = [-2, 1.5, -1, 2, -1.5];
+
+function Cover({ project, large = false }) {
+  if (project.video && !large) {
+    return (
+      <div className="relative aspect-video overflow-hidden bg-ink">
+        <img
+          src={`https://img.youtube.com/vi/${project.video}/hqdefault.jpg`}
+          alt=""
+          loading="lazy"
+          className="w-full h-full object-cover saturate-[0.85] contrast-105"
+        />
+        <span className="absolute inset-0 grid place-items-center">
+          <span className="grid place-items-center w-14 h-14 rounded-full bg-lime border-2 border-ink shadow-[2px_2px_0_var(--color-ink)]">
+            <Play size={22} className="text-forest translate-x-0.5" fill="currentColor" />
+          </span>
+        </span>
+      </div>
+    );
   }
-];
+  const Icon = icons[project.icon] ?? Bot;
+  return (
+    <div className="relative aspect-video halftone grid place-items-center overflow-hidden">
+      <Sparkle size={26} color="var(--color-leaf)" className="absolute top-4 left-5" />
+      <Sparkle size={16} color="var(--color-forest)" className="absolute bottom-5 right-8" />
+      <span className="grid place-items-center w-24 h-24 rounded-2xl bg-sheet border-2 border-ink shadow-[4px_4px_0_var(--color-ink)] -rotate-6">
+        <Icon size={46} className="text-leaf" strokeWidth={1.8} />
+      </span>
+      <span className="absolute bottom-3 left-4 font-mono text-[0.65rem] font-bold tracking-widest uppercase text-forest/70">
+        {project.skills[0]} · {project.year}
+      </span>
+    </div>
+  );
+}
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    if (!selected) return;
+    const onKey = (e) => e.key === "Escape" && setSelected(null);
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
 
   return (
-    <div className="space-y-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center"
-      >
-        <h2 className="text-3xl font-bold text-gray-900">Projects</h2>
-        <p>Click each box to learn more :)</p>
-        <div className="w-20 h-1 bg-green-500 mx-auto mt-4 rounded-full"></div>
-      </motion.div>
+    <div className="relative">
+      <SectionTitle label="04 / things I've built" title="PROJECTS" seed={37}>
+        <p className="mt-4 font-hand text-2xl text-forest -rotate-1">click a polaroid for the full story →</p>
+      </SectionTitle>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project) => (
-          <motion.div
+      <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+        {projects.map((project, i) => (
+          <motion.button
             key={project.id}
-            layoutId={`project-${project.id}`}
-            onClick={() => setSelectedProject(project)}
-            className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all cursor-pointer border border-green-50 group"
-            whileHover={{ y: -5 }}
-            style={{padding: "32px"}}
+            type="button"
+            onClick={() => setSelected(project)}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ rotate: 0, y: -8, scale: 1.02 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
+            style={{ rotate: tilts[i % tilts.length] }}
+            className="focus-ring group relative text-left bg-white p-3 pb-5 shadow-[0_14px_28px_-14px_rgb(28_33_27/0.5),0_2px_6px_rgb(28_33_27/0.12)]"
           >
-            <div className="aspect-video rounded-xl overflow-hidden bg-gray-100 mb-4 relative">
-               {/* Thumbnail overlay to prevent iframe interaction in card view */}
-               <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors z-10" />
-               <iframe
-                src={project.video}
-                title={project.title}
-                className="w-full h-full pointer-events-none"
-                frameBorder="0"
-              />
-            </div>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
-                <span className="text-sm text-gray-500">{project.year}</span>
+            {i % 2 === 0 ? (
+              <Paperclip className="absolute -top-7 right-6 w-6 h-16 z-10 rotate-6" />
+            ) : (
+              <div className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-2 w-24" />
+            )}
+            {project.award && (
+              <span className="absolute -top-4 -left-3 z-10 dymo bg-leaf -rotate-6 flex items-center gap-1">
+                <Trophy size={12} /> Award winner
+              </span>
+            )}
+
+            <Cover project={project} />
+
+            <div className="px-1 pt-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="font-display text-2xl leading-tight text-forest group-hover:text-leaf transition-colors">
+                  {project.title}
+                </h3>
+                <span className="font-hand text-xl text-ink/60 shrink-0">'{project.year.slice(2)}</span>
               </div>
-              <p className="text-gray-600 line-clamp-2">{project.shortDesc}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.skills.slice(0, 3).map(skill => (
-                  <span key={skill} className="text-xs px-2 py-1 bg-green-50 text-green-700 rounded-md" style={{padding: "6px"}}>
-                    {skill}
+              <p className="mt-2 text-sm leading-relaxed text-ink/80">{project.shortDesc}</p>
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {project.skills.slice(0, 3).map((s) => (
+                  <span key={s} className="font-mono text-[0.68rem] font-bold uppercase tracking-wide px-2 py-0.5 rounded bg-mint text-forest border border-forest/20">
+                    {s}
                   </span>
                 ))}
                 {project.skills.length > 3 && (
-                  <span className="text-xs px-2 py-1 bg-gray-50 text-gray-500 rounded-md" style={{padding: "6px"}}>
-                    +{project.skills.length - 3} more
-                  </span>
+                  <span className="font-mono text-[0.68rem] font-bold px-2 py-0.5 text-ink/50">+{project.skills.length - 3}</span>
                 )}
               </div>
             </div>
-          </motion.div>
+          </motion.button>
         ))}
       </div>
 
       <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedProject(null)}>
+        {selected && (
+          <motion.div
+            className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 bg-forest/40 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelected(null)}
+          >
             <motion.div
-              layoutId={`project-${selectedProject.id}`}
-              className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label={selected.title}
+              initial={{ scale: 0.85, y: 30, rotate: -2 }}
+              animate={{ scale: 1, y: 0, rotate: 0 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 26 }}
+              className="win w-full max-w-3xl max-h-[90vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
-              style={{padding: "32px"}}
             >
-              <div className="p-6 space-y-6">
-                <div className="flex justify-between items-start">
+              <div className="win-bar shrink-0">
+                <span className="truncate">{selected.id}.exe</span>
+                <button
+                  onClick={() => setSelected(null)}
+                  className="focus-ring grid place-items-center w-6 h-6 rounded bg-sheet text-ink border-2 border-ink leading-none hover:bg-lime"
+                  aria-label="Close"
+                  autoFocus
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="sheet overflow-y-auto p-5 sm:p-8 shadow-none">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-3xl font-bold text-gray-900">{selectedProject.title}</h2>
-                    <p className="text-green-600">{selectedProject.year}</p>
-                  </div>
-                  <button 
-                    onClick={() => setSelectedProject(null)}
-                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                  >
-                    <X size={24} />
-                  </button>
-                </div>
-
-                <div className="aspect-video rounded-xl overflow-hidden bg-black">
-                  <iframe
-                    src={selectedProject.video}
-                    title={selectedProject.title}
-                    className="w-full h-full"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-gray-900">About</h3>
-                  <p className="text-gray-600 leading-relaxed">{selectedProject.fullDesc}</p>
-                  
-                  <h3 className="text-xl font-semibold text-gray-900">The Story</h3>
-                  <p className="text-gray-600 leading-relaxed">{selectedProject.story}</p>
-                </div>
-
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-gray-900">Technologies</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.skills.map((skill) => (
-                      <span 
-                        key={skill} 
-                        className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium"
-                        style={{padding: "6px"}}
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                    <p className="font-mono text-xs font-bold tracking-widest uppercase text-forest/70">{selected.year}</p>
+                    <h2 className="font-display text-4xl sm:text-5xl text-leaf leading-tight">{selected.title}</h2>
+                    {selected.award && <p className="mt-1 font-hand text-2xl text-forest">🏆 {selected.award}</p>}
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex gap-4">
-                  {selectedProject.links.map((link) => (
-                    <a
-                      key={link.name}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors"
-                      style={{padding: "6px", marginTop: "8px"}}
-                    >
-                      {link.name.includes("GitHub") ? <FaGithub size={18} /> : <ExternalLink size={18} />}
-                      {link.name}
-                    </a>
+                <div className="mt-6 border-2 border-ink rounded-lg overflow-hidden">
+                  {selected.video ? (
+                    <div className="aspect-video bg-ink">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${selected.video}`}
+                        title={selected.title}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <Cover project={selected} large />
+                  )}
+                </div>
+
+                <h3 className="mt-8 font-mono text-xs font-bold tracking-[0.2em] uppercase text-forest/70">About</h3>
+                <p className="mt-2 leading-relaxed text-ink/85">{selected.fullDesc}</p>
+
+                {selected.highlights && (
+                  <>
+                    <h3 className="mt-6 font-mono text-xs font-bold tracking-[0.2em] uppercase text-forest/70">Highlights</h3>
+                    <ul className="mt-3 space-y-2">
+                      {selected.highlights.map((h) => (
+                        <li key={h} className="flex gap-3 leading-relaxed text-ink/85">
+                          <Sparkle size={12} color="var(--color-leaf)" className="mt-[0.45rem] shrink-0" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {selected.story && (
+                  <>
+                    <h3 className="mt-6 font-mono text-xs font-bold tracking-[0.2em] uppercase text-forest/70">The story</h3>
+                    <p className="mt-2 leading-relaxed text-ink/85">{selected.story}</p>
+                  </>
+                )}
+
+                <h3 className="mt-6 font-mono text-xs font-bold tracking-[0.2em] uppercase text-forest/70">Built with</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {selected.skills.map((s) => (
+                    <span key={s} className="dymo">
+                      {s}
+                    </span>
                   ))}
                 </div>
+
+                {selected.links.length > 0 && (
+                  <div className="mt-8 pt-6 border-t-2 border-dashed border-ink/20 flex flex-wrap gap-3">
+                    {selected.links.map((link) => (
+                      <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="bubble focus-ring text-sm">
+                        {link.name === "GitHub" ? <FaGithub size={16} /> : <ExternalLink size={16} />}
+                        {link.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
